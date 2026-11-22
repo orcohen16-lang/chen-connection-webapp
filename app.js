@@ -51,15 +51,16 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 
 let current = 0;
 let answers = Array(questions.length).fill(null);
-let activeScreen = "welcome";
+let activeScreen = "quiz";
 let toastTimer;
 let processingTimer;
+let questionTransitionTimer;
+let isTransitioning = false;
 
 const elements = {
   screens: [...document.querySelectorAll(".screen")],
-  progressText: document.getElementById("progressText"),
-  progressPct: document.getElementById("progressPct"),
-  progressBar: document.getElementById("progressBar"),
+  questionCounter: document.getElementById("questionCounter"),
+  questionTransition: document.getElementById("questionTransition"),
   questionText: document.getElementById("questionText"),
   answers: document.getElementById("answers"),
   backQuestion: document.getElementById("backQuestion"),
@@ -110,11 +111,8 @@ function startQuiz() {
 
 function renderQuestion() {
   const number = current + 1;
-  const percent = Math.round((number / questions.length) * 100);
-  elements.questionText.textContent = `${number}. ${questions[current]}`;
-  elements.progressText.textContent = `שאלה ${number} מתוך ${questions.length}`;
-  elements.progressPct.textContent = `${percent}%`;
-  elements.progressBar.style.width = `${percent}%`;
+  elements.questionText.textContent = questions[current];
+  elements.questionCounter.textContent = `שאלה ${number} מתוך ${questions.length}`;
   elements.answers.replaceChildren();
 
   choices.forEach((choice, index) => {
@@ -167,21 +165,37 @@ function handleAnswerKeys(event) {
 }
 
 function nextQuestion() {
-  if (answers[current] === null) return;
+  if (answers[current] === null || isTransitioning) return;
   if (current < questions.length - 1) {
-    current += 1;
-    renderQuestion();
-    animateQuestionChange();
+    transitionToQuestion(1);
     return;
   }
   showProcessing();
 }
 
 function previousQuestion() {
-  if (current === 0) return;
-  current -= 1;
-  renderQuestion();
-  animateQuestionChange();
+  if (current === 0 || isTransitioning) return;
+  transitionToQuestion(-1);
+}
+
+function transitionToQuestion(step) {
+  isTransitioning = true;
+  elements.nextQuestion.disabled = true;
+  elements.questionTransition.classList.remove("is-active");
+  void elements.questionTransition.offsetWidth;
+  elements.questionTransition.classList.add("is-active");
+
+  window.setTimeout(() => {
+    current += step;
+    renderQuestion();
+    animateQuestionChange();
+  }, reducedMotion ? 0 : 330);
+
+  clearTimeout(questionTransitionTimer);
+  questionTransitionTimer = window.setTimeout(() => {
+    elements.questionTransition.classList.remove("is-active");
+    isTransitioning = false;
+  }, reducedMotion ? 0 : 920);
 }
 
 function animateQuestionChange() {
@@ -351,9 +365,6 @@ class AmbientSoundscape {
 
 const soundscape = new AmbientSoundscape();
 
-document.getElementById("openInstructions").addEventListener("click", () => showScreen("instructions"));
-document.getElementById("backToWelcome").addEventListener("click", () => showScreen("welcome", "back"));
-document.getElementById("startQuiz").addEventListener("click", startQuiz);
 elements.backQuestion.addEventListener("click", previousQuestion);
 elements.nextQuestion.addEventListener("click", nextQuestion);
 document.getElementById("openWhatsApp").addEventListener("click", openWhatsApp);
@@ -369,4 +380,4 @@ window.addEventListener("pageshow", (event) => {
   if (event.persisted && activeScreen === "result") elements.toast.classList.remove("is-visible");
 });
 
-restoreProgress();
+if (!restoreProgress()) renderQuestion();

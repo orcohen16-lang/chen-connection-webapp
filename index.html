@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#f7f1ee" />
+    <meta name="theme-color" content="#f6f2eb" />
     <meta
       name="description"
       content="שאלון להתבוננות במערכת היחסים שלך עם הילד – חן כהן, ייעוץ חינוכי והדרכת הורים"
@@ -37,56 +37,12 @@
         </button>
       </header>
 
-      <section class="screen is-active" id="welcome" data-screen="welcome" aria-labelledby="welcomeTitle">
-        <div class="screen-content welcome-content">
-          <p class="eyebrow">חן כהן | ייעוץ חינוכי, הדרכת הורים ואימון מנטלי</p>
-          <h1 id="welcomeTitle">עוצרים רגע.<br /><span>מסתכלים על הקשר.</span></h1>
-          <p class="lead">היי, איזה כיף שהגעת! ❤️</p>
-          <div class="prose">
-            <p>אני חן כהן, אשת חינוך, מדריכת הורים ומאמנת מנטלית.</p>
-            <p>אני מאמינה שמערכת היחסים בין מבוגרים לילדים משפיעה על הרבה יותר ממה שאנחנו לפעמים מבינים.</p>
-            <p>כאן נדבר על תקשורת, סמכות, גבולות, התמודדות עם אתגרים בבית ובעיקר על הדרך לבנות קשר משמעותי עם הילדים.</p>
-          </div>
-          <div class="soft-note">
-            <span class="note-mark" aria-hidden="true">✦</span>
-            <p>הכנתי לך מתנה קטנה: שאלון שיעזור לך לעצור לרגע, לבחון את מערכת היחסים שלך עם הילד ולגלות איפה כדאי להשקיע קצת יותר.</p>
-          </div>
-          <button class="primary-button" id="openInstructions" type="button">כן, אני רוצה לקבל את השאלון 💌</button>
-        </div>
-      </section>
-
-      <section class="screen" id="instructions" data-screen="instructions" aria-labelledby="instructionsTitle" hidden>
+      <section class="screen quiz-screen is-active" id="quiz" data-screen="quiz" aria-labelledby="questionText">
         <div class="screen-content">
-          <p class="mini-tag">כמה דקות לעצמך ולקשר שלכם</p>
-          <h2 id="instructionsTitle">איזה כיף! ❤️</h2>
-          <p class="lead">אז איך זה עובד?</p>
-          <ol class="steps-list">
-            <li><span>1</span><p>תעני על 10 שאלות קצרות.</p></li>
-            <li><span>2</span><p>בחרי בכל שאלה את התשובה שמתארת הכי טוב את מה שקורה בדרך כלל.</p></li>
-            <li><span>3</span><p>בסיום תקבלי את הניקוד הכולל שלך.</p></li>
-            <li><span>4</span><p>לפי התוצאה אשלח לך מסר אישי, תובנה, טיפ וכלי קטן שאפשר ליישם כבר בבית.</p></li>
-          </ol>
-          <p>אין כאן תשובות נכונות או לא נכונות ואין ציון על הורות. המטרה היא לעצור לרגע ולהסתכל על הקשר שלכם מזווית קצת אחרת.</p>
-          <div class="soft-note compact">
-            <p>השאלון נועד להתבוננות אישית ואינו אבחון מקצועי. התוצאה לא מגדירה אותך כהורה ולא מסכמת את מערכת היחסים שלך עם הילד.</p>
+          <div class="question-meta">
+            <p class="eyebrow">השאלון שלך</p>
+            <span class="question-counter" id="questionCounter">שאלה 1 מתוך 10</span>
           </div>
-          <div class="button-row">
-            <button class="text-button" id="backToWelcome" type="button">חזרה</button>
-            <button class="primary-button" id="startQuiz" type="button">מתחילות</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen quiz-screen" id="quiz" data-screen="quiz" aria-labelledby="questionText" hidden>
-        <div class="screen-content">
-          <div class="progress-area" aria-label="התקדמות בשאלון">
-            <div class="progress-copy">
-              <span id="progressText">שאלה 1 מתוך 10</span>
-              <span id="progressPct">10%</span>
-            </div>
-            <div class="progress-track"><span id="progressBar"></span></div>
-          </div>
-          <p class="eyebrow">השאלון שלך</p>
           <h2 class="question-text" id="questionText"></h2>
           <p class="choice-hint">בחרי תשובה אחת:</p>
           <div class="answers" id="answers" role="radiogroup"></div>
@@ -97,9 +53,22 @@
         </div>
       </section>
 
+      <div class="question-transition" id="questionTransition" aria-hidden="true">
+        <div class="transition-ripples"><i></i><i></i></div>
+        <div class="stone-stack" aria-hidden="true">
+          <span class="stone stone-one"></span>
+          <span class="stone stone-two"></span>
+          <span class="stone stone-three"></span>
+          <span class="stone stone-four"></span>
+          <span class="stone stone-five"></span>
+        </div>
+      </div>
+
       <section class="screen processing-screen" id="processing" data-screen="processing" aria-live="polite" hidden>
         <div class="screen-content processing-content">
-          <div class="breathing-circle" aria-hidden="true"><span></span></div>
+          <div class="processing-stack" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
           <p class="eyebrow">עוד רגע קטן</p>
           <h2>מחברת את התשובות שלך...</h2>
         </div>
