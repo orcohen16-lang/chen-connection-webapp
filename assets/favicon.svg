@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="18" fill="#F4EFE7"/>
-  <ellipse cx="32" cy="48" rx="18" ry="6" fill="#5F7065"/>
-  <ellipse cx="32" cy="37" rx="14" ry="6" fill="#C47A59"/>
-  <ellipse cx="32" cy="27" rx="10" ry="5" fill="#849184"/>
-  <ellipse cx="32" cy="18" rx="7" ry="5" fill="#303733"/>
+  <rect width="64" height="64" rx="18" fill="#F8F5F0"/>
+  <ellipse cx="32" cy="48" rx="18" ry="6" fill="#80518B"/>
+  <ellipse cx="32" cy="37" rx="14" ry="6" fill="#C87542"/>
+  <ellipse cx="32" cy="27" rx="10" ry="5" fill="#A983B1"/>
+  <ellipse cx="32" cy="18" rx="7" ry="5" fill="#383431"/>
 </svg>

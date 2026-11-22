@@ -54,13 +54,11 @@ let answers = Array(questions.length).fill(null);
 let activeScreen = "instructions";
 let toastTimer;
 let processingTimer;
-let questionTransitionTimer;
 let isTransitioning = false;
 
 const elements = {
   screens: [...document.querySelectorAll(".screen")],
   questionCounter: document.getElementById("questionCounter"),
-  questionTransition: document.getElementById("questionTransition"),
   questionText: document.getElementById("questionText"),
   answers: document.getElementById("answers"),
   backQuestion: document.getElementById("backQuestion"),
@@ -181,21 +179,21 @@ function previousQuestion() {
 function transitionToQuestion(step) {
   isTransitioning = true;
   elements.nextQuestion.disabled = true;
-  elements.questionTransition.classList.remove("is-active");
-  void elements.questionTransition.offsetWidth;
-  elements.questionTransition.classList.add("is-active");
+  const content = document.querySelector("#quiz .screen-content");
+  content.classList.remove("is-switching");
+  void content.offsetWidth;
+  content.classList.add("is-switching");
 
   window.setTimeout(() => {
     current += step;
     renderQuestion();
     animateQuestionChange();
-  }, reducedMotion ? 0 : 330);
+  }, reducedMotion ? 0 : 260);
 
-  clearTimeout(questionTransitionTimer);
-  questionTransitionTimer = window.setTimeout(() => {
-    elements.questionTransition.classList.remove("is-active");
+  window.setTimeout(() => {
+    content.classList.remove("is-switching");
     isTransitioning = false;
-  }, reducedMotion ? 0 : 920);
+  }, reducedMotion ? 0 : 620);
 }
 
 function animateQuestionChange() {

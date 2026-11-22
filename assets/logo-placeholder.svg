@@ -1,11 +1,11 @@
 <svg width="250" height="150" viewBox="0 0 250 150" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g transform="translate(17 10)">
-    <path d="M39 105C39 96 48 91 64 91C81 91 90 96 90 105C90 113 81 117 64 117C48 117 39 113 39 105Z" fill="#5F7065"/>
-    <path d="M45 82C45 73 53 69 65 69C78 69 85 74 85 82C85 90 78 94 65 94C52 94 45 90 45 82Z" fill="#C47A59"/>
-    <path d="M49 61C49 53 56 48 66 48C77 48 82 53 82 61C82 69 76 72 66 72C56 72 49 69 49 61Z" fill="#849184"/>
-    <path d="M54 41C54 34 59 30 67 30C75 30 80 35 80 41C80 48 75 51 67 51C59 51 54 48 54 41Z" fill="#D4B995"/>
-    <path d="M59 24C59 18 63 14 68 14C74 14 77 18 77 24C77 29 73 32 68 32C63 32 59 29 59 24Z" fill="#303733"/>
+    <path d="M39 105C39 96 48 91 64 91C81 91 90 96 90 105C90 113 81 117 64 117C48 117 39 113 39 105Z" fill="#80518B"/>
+    <path d="M45 82C45 73 53 69 65 69C78 69 85 74 85 82C85 90 78 94 65 94C52 94 45 90 45 82Z" fill="#C87542"/>
+    <path d="M49 61C49 53 56 48 66 48C77 48 82 53 82 61C82 69 76 72 66 72C56 72 49 69 49 61Z" fill="#A983B1"/>
+    <path d="M54 41C54 34 59 30 67 30C75 30 80 35 80 41C80 48 75 51 67 51C59 51 54 48 54 41Z" fill="#E0B58F"/>
+    <path d="M59 24C59 18 63 14 68 14C74 14 77 18 77 24C77 29 73 32 68 32C63 32 59 29 59 24Z" fill="#383431"/>
   </g>
-  <text x="157" y="64" fill="#303733" font-family="Arial, sans-serif" font-size="34" font-weight="700" text-anchor="middle">חן כהן</text>
-  <text x="157" y="92" fill="#5F7065" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">להוביל דרך הקשר</text>
+  <text x="157" y="64" fill="#383431" font-family="Arial, sans-serif" font-size="34" font-weight="700" text-anchor="middle">חן כהן</text>
+  <text x="157" y="92" fill="#80518B" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">להוביל דרך הקשר</text>
 </svg>
