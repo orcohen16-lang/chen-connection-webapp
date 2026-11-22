@@ -46,12 +46,12 @@ const outcomes = [
 ];
 
 const config = window.CHEN_APP_CONFIG || {};
-const storageKey = "chen-connection-journey-v1";
+const storageKey = "chen-connection-journey-v2";
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let current = 0;
 let answers = Array(questions.length).fill(null);
-let activeScreen = "quiz";
+let activeScreen = "instructions";
 let toastTimer;
 let processingTimer;
 let questionTransitionTimer;
@@ -274,15 +274,12 @@ function restoreProgress() {
     if (!stored || !Array.isArray(stored.answers) || stored.answers.length !== questions.length) return false;
     answers = stored.answers.map((value) => (choices.some((choice) => choice.value === value) ? value : null));
     current = Math.min(Math.max(Number(stored.current) || 0, 0), questions.length - 1);
-    if (stored.activeScreen === "quiz") {
+    if (stored.activeScreen === "quiz" && !answers.every((value) => value !== null)) {
       renderQuestion();
       showScreen("quiz");
       return true;
     }
-    if (stored.activeScreen === "result" && answers.every((value) => value !== null)) {
-      showResult();
-      return true;
-    }
+    clearStoredProgress();
   } catch (_) {
     clearStoredProgress();
   }
@@ -365,6 +362,7 @@ class AmbientSoundscape {
 
 const soundscape = new AmbientSoundscape();
 
+document.getElementById("startQuiz").addEventListener("click", startQuiz);
 elements.backQuestion.addEventListener("click", previousQuestion);
 elements.nextQuestion.addEventListener("click", nextQuestion);
 document.getElementById("openWhatsApp").addEventListener("click", openWhatsApp);
@@ -380,4 +378,4 @@ window.addEventListener("pageshow", (event) => {
   if (event.persisted && activeScreen === "result") elements.toast.classList.remove("is-visible");
 });
 
-if (!restoreProgress()) renderQuestion();
+restoreProgress();

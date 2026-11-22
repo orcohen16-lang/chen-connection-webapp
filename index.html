@@ -37,7 +37,26 @@
         </button>
       </header>
 
-      <section class="screen quiz-screen is-active" id="quiz" data-screen="quiz" aria-labelledby="questionText">
+      <section class="screen is-active" id="instructions" data-screen="instructions" aria-labelledby="instructionsTitle">
+        <div class="screen-content instructions-content">
+          <p class="mini-tag">כמה דקות לעצמך ולקשר שלכם</p>
+          <h2 id="instructionsTitle">איזה כיף! ❤️</h2>
+          <p class="lead">אז איך זה עובד?</p>
+          <ol class="steps-list">
+            <li><span>1</span><p>תעני על 10 שאלות קצרות.</p></li>
+            <li><span>2</span><p>בחרי בכל שאלה את התשובה שמתארת הכי טוב את מה שקורה בדרך כלל.</p></li>
+            <li><span>3</span><p>בסיום תקבלי את הניקוד הכולל שלך.</p></li>
+            <li><span>4</span><p>לפי התוצאה אשלח לך מסר אישי, תובנה, טיפ וכלי קטן שאפשר ליישם כבר בבית.</p></li>
+          </ol>
+          <p>אין כאן תשובות נכונות או לא נכונות ואין ציון על הורות. המטרה היא לעצור לרגע ולהסתכל על הקשר שלכם מזווית קצת אחרת.</p>
+          <div class="soft-note compact">
+            <p>השאלון נועד להתבוננות אישית ואינו אבחון מקצועי. התוצאה לא מגדירה אותך כהורה ולא מסכמת את מערכת היחסים שלך עם הילד.</p>
+          </div>
+          <button class="primary-button start-button" id="startQuiz" type="button">מתחילות</button>
+        </div>
+      </section>
+
+      <section class="screen quiz-screen" id="quiz" data-screen="quiz" aria-labelledby="questionText" hidden>
         <div class="screen-content">
           <div class="question-meta">
             <p class="eyebrow">השאלון שלך</p>
