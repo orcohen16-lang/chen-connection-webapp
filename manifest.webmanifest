@@ -1,0 +1,19 @@
+{
+  "name": "עוצרים רגע ומסתכלים על הקשר",
+  "short_name": "הקשר שלנו",
+  "description": "שאלון להתבוננות במערכת היחסים שלך עם הילד",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8f3ef",
+  "theme_color": "#f7f1ee",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

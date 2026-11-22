@@ -1,0 +1,54 @@
+# חן כהן - עוצרים רגע ומסתכלים על הקשר
+
+WebApp סטטית ומותאמת למובייל למסע שאלות קצר שמתחיל באינסטגרם ומסתיים ב-WhatsApp או בחזרה לאינסטגרם.
+
+## הגדרה לפני פרסום
+
+פתחו את `config.js` והגדירו:
+
+```js
+window.CHEN_APP_CONFIG = {
+  whatsappPhone: "972501234567",
+  whatsappMessage: "היי חן, מילאתי את השאלון ורציתי לדבר איתך על מערכת היחסים שלי עם הילד.",
+  instagramUrl: "https://www.instagram.com/USERNAME/",
+  preserveProgress: true,
+};
+```
+
+- מספר WhatsApp צריך להיות בפורמט בינלאומי, ללא `+` וללא רווחים.
+- החליפו את `assets/logo-placeholder.svg` בלוגו הסופי. אפשר להשתמש גם ב-PNG, אך יש לעדכן את הנתיב ב-`index.html`.
+- כל המלל המקורי של השאלון נמצא ב-`index.html` וב-`app.js` ונשמר ללא שינוי.
+
+## תצוגה מקומית
+
+מהתיקייה הזו הריצו:
+
+```bash
+python3 -m http.server 4173
+```
+
+לאחר מכן פתחו `http://localhost:4173`.
+
+## העלאה ל-GitHub Pages
+
+1. צרו repository חדש ב-GitHub.
+2. העלו את תוכן התיקייה הזו ל-root של ה-repository.
+3. ב-GitHub עברו אל `Settings` > `Pages`.
+4. תחת `Build and deployment` בחרו `Deploy from a branch`.
+5. בחרו את ענף `main` ואת התיקייה `/ (root)` ושמרו.
+
+אין צורך ב-build, בשרת או ב-dependencies.
+
+## קישור מאינסטגרם
+
+מומלץ לשלוח קישור עם סימון מקור:
+
+```text
+https://YOUR-DOMAIN/?from=instagram
+```
+
+הכפתור בסיום משתמש קודם בקישור המפורש שהוגדר ב-`instagramUrl`. אם הוא חסר והמשתמשת הגיעה מאינסטגרם, האפליקציה תנסה לחזור למסך הקודם.
+
+## פרטיות
+
+התשובות נשמרות רק בדפדפן של המשתמשת באמצעות `localStorage`, כדי לא לאבד התקדמות במקרה של רענון. הן אינן נשלחות לשרת ואינן מצורפות להודעת ה-WhatsApp.
