@@ -274,60 +274,34 @@ function clearStoredProgress() {
   }
 }
 
-class AmbientSoundscape {
-  constructor() {
-    this.context = null;
-    this.master = null;
-    this.nodes = [];
+class BackgroundMusic {
+  constructor(audioElement) {
+    this.audio = audioElement;
+    this.audio.volume = 0.28;
     this.isPlaying = false;
   }
 
   async toggle() {
-    if (!this.context) this.create();
-    if (this.context.state === "suspended") await this.context.resume();
-    this.isPlaying ? this.stop() : this.play();
+    if (this.isPlaying) {
+      this.stop();
+      return;
+    }
+    await this.play();
   }
 
-  create() {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    this.context = new AudioContext();
-    this.master = this.context.createGain();
-    this.master.gain.value = 0;
-    this.master.connect(this.context.destination);
-
-    [174.61, 220, 261.63].forEach((frequency, index) => {
-      const oscillator = this.context.createOscillator();
-      const gain = this.context.createGain();
-      const filter = this.context.createBiquadFilter();
-      oscillator.type = index === 1 ? "sine" : "triangle";
-      oscillator.frequency.value = frequency / 2;
-      oscillator.detune.value = index * 4 - 4;
-      filter.type = "lowpass";
-      filter.frequency.value = 380;
-      gain.gain.value = index === 1 ? 0.16 : 0.08;
-      oscillator.connect(filter).connect(gain).connect(this.master);
-      oscillator.start();
-      this.nodes.push({ oscillator, gain });
-    });
-  }
-
-  play() {
-    if (!this.master) return;
-    const now = this.context.currentTime;
-    this.master.gain.cancelScheduledValues(now);
-    this.master.gain.setValueAtTime(this.master.gain.value, now);
-    this.master.gain.linearRampToValueAtTime(0.045, now + 1.8);
-    this.isPlaying = true;
-    this.updateButton();
+  async play() {
+    try {
+      await this.audio.play();
+      this.isPlaying = true;
+      this.updateButton();
+    } catch (_) {
+      this.isPlaying = false;
+      this.updateButton();
+    }
   }
 
   stop() {
-    if (!this.master) return;
-    const now = this.context.currentTime;
-    this.master.gain.cancelScheduledValues(now);
-    this.master.gain.setValueAtTime(this.master.gain.value, now);
-    this.master.gain.linearRampToValueAtTime(0, now + 0.8);
+    this.audio.pause();
     this.isPlaying = false;
     this.updateButton();
   }
@@ -340,15 +314,15 @@ class AmbientSoundscape {
   }
 }
 
-const soundscape = new AmbientSoundscape();
+const backgroundMusic = new BackgroundMusic(document.getElementById("backgroundMusic"));
 
 document.getElementById("startQuiz").addEventListener("click", startQuiz);
 elements.backQuestion.addEventListener("click", previousQuestion);
 document.getElementById("continueResult").addEventListener("click", showGuidance);
-elements.soundToggle.addEventListener("click", () => soundscape.toggle());
+elements.soundToggle.addEventListener("click", () => backgroundMusic.toggle());
 
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden && soundscape.isPlaying) soundscape.stop();
+  if (document.hidden && backgroundMusic.isPlaying) backgroundMusic.stop();
 });
 
 configureExternalLinks();
