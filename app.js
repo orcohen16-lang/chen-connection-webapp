@@ -63,6 +63,7 @@ const elements = {
   questionText: document.getElementById("questionText"),
   answers: document.getElementById("answers"),
   backQuestion: document.getElementById("backQuestion"),
+  calculateResult: document.getElementById("calculateResult"),
   scoreNumber: document.getElementById("scoreNumber"),
   personalMessage: document.getElementById("personalMessage"),
   personalTip: document.getElementById("personalTip"),
@@ -138,21 +139,29 @@ function renderQuestion() {
   });
 
   elements.backQuestion.hidden = current === 0;
+  const isLastQuestion = current === questions.length - 1;
+  elements.calculateResult.hidden = !isLastQuestion;
+  elements.calculateResult.disabled = !isLastQuestion || answers[current] === null;
   saveProgress();
 }
 
 function selectAnswer(value) {
   if (isTransitioning || isAnswerAdvancing) return;
   answers[current] = value;
+  const isLastQuestion = current === questions.length - 1;
   [...elements.answers.children].forEach((button) => {
     const selected = Number(button.dataset.value) === value;
     button.classList.toggle("is-selected", selected);
     button.setAttribute("aria-checked", String(selected));
-    button.disabled = true;
+    button.disabled = !isLastQuestion;
   });
-  elements.answers.classList.add("is-locked");
-  isAnswerAdvancing = true;
+  elements.answers.classList.toggle("is-locked", !isLastQuestion);
+  elements.calculateResult.disabled = !isLastQuestion;
   saveProgress();
+
+  if (isLastQuestion) return;
+
+  isAnswerAdvancing = true;
 
   answerAdvanceTimer = window.setTimeout(() => {
     isAnswerAdvancing = false;
@@ -254,7 +263,7 @@ function restoreProgress() {
     if (!stored || !Array.isArray(stored.answers) || stored.answers.length !== questions.length) return false;
     answers = stored.answers.map((value) => (choices.some((choice) => choice.value === value) ? value : null));
     current = Math.min(Math.max(Number(stored.current) || 0, 0), questions.length - 1);
-    if (stored.activeScreen === "quiz" && !answers.every((value) => value !== null)) {
+    if (stored.activeScreen === "quiz") {
       renderQuestion();
       showScreen("quiz");
       return true;
@@ -318,6 +327,7 @@ const backgroundMusic = new BackgroundMusic(document.getElementById("backgroundM
 
 document.getElementById("startQuiz").addEventListener("click", startQuiz);
 elements.backQuestion.addEventListener("click", previousQuestion);
+elements.calculateResult.addEventListener("click", nextQuestion);
 document.getElementById("continueResult").addEventListener("click", showGuidance);
 elements.soundToggle.addEventListener("click", () => backgroundMusic.toggle());
 
