@@ -64,6 +64,7 @@ const elements = {
   answers: document.getElementById("answers"),
   backQuestion: document.getElementById("backQuestion"),
   calculateResult: document.getElementById("calculateResult"),
+  progressFill: document.getElementById("progressFill"),
   scoreNumber: document.getElementById("scoreNumber"),
   personalMessage: document.getElementById("personalMessage"),
   personalTip: document.getElementById("personalTip"),
@@ -113,6 +114,9 @@ function renderQuestion() {
   const number = current + 1;
   elements.questionText.textContent = questions[current];
   elements.questionCounter.textContent = `שאלה ${number} מתוך ${questions.length}`;
+  if (elements.progressFill) {
+    elements.progressFill.style.width = `${(number / questions.length) * 100}%`;
+  }
   elements.answers.classList.remove("is-locked");
   elements.answers.replaceChildren();
 
@@ -133,7 +137,10 @@ function renderQuestion() {
     label.textContent = choice.label;
     button.append(indicator, label);
 
-    button.addEventListener("click", () => selectAnswer(choice.value));
+    button.addEventListener("click", (e) => {
+      if (!reducedMotion && !isTransitioning && !isAnswerAdvancing) createRipple(button, e);
+      selectAnswer(choice.value);
+    });
     button.addEventListener("keydown", handleAnswerKeys);
     elements.answers.appendChild(button);
   });
@@ -218,6 +225,30 @@ function animateQuestionChange() {
   requestAnimationFrame(() => content.classList.add("question-refresh"));
 }
 
+function createRipple(button, event) {
+  const rect = button.getBoundingClientRect();
+  const ripple = document.createElement("span");
+  ripple.className = "ripple";
+  const size = Math.max(rect.width, rect.height);
+  const x = (event ? event.clientX - rect.left : rect.width / 2) - size / 2;
+  const y = (event ? event.clientY - rect.top : rect.height / 2) - size / 2;
+  ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
+  button.appendChild(ripple);
+  ripple.addEventListener("animationend", () => ripple.remove());
+}
+
+function animateCountUp(element, target, duration) {
+  if (reducedMotion) { element.textContent = target; return; }
+  const start = performance.now();
+  const tick = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    element.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
 function showProcessing() {
   showScreen("processing");
   processingTimer = window.setTimeout(showResult, reducedMotion ? 350 : 1750);
@@ -228,11 +259,12 @@ function showResult() {
   const outcome = outcomes.find(({ min, max }) => score >= min && score <= max);
   if (!outcome) return;
 
-  elements.scoreNumber.textContent = score;
+  elements.scoreNumber.textContent = "0";
   elements.personalMessage.textContent = outcome.message;
   elements.personalTip.textContent = outcome.tip;
   showScreen("result");
   saveProgress();
+  window.setTimeout(() => animateCountUp(elements.scoreNumber, score, 950), reducedMotion ? 0 : 500);
 }
 
 function showGuidance() {
