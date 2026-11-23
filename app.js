@@ -54,7 +54,9 @@ let answers = Array(questions.length).fill(null);
 let activeScreen = "instructions";
 let toastTimer;
 let processingTimer;
+let answerAdvanceTimer;
 let isTransitioning = false;
+let isAnswerAdvancing = false;
 
 const elements = {
   screens: [...document.querySelectorAll(".screen")],
@@ -62,7 +64,6 @@ const elements = {
   questionText: document.getElementById("questionText"),
   answers: document.getElementById("answers"),
   backQuestion: document.getElementById("backQuestion"),
-  nextQuestion: document.getElementById("nextQuestion"),
   scoreNumber: document.getElementById("scoreNumber"),
   personalMessage: document.getElementById("personalMessage"),
   personalTip: document.getElementById("personalTip"),
@@ -108,9 +109,12 @@ function startQuiz() {
 }
 
 function renderQuestion() {
+  clearTimeout(answerAdvanceTimer);
+  isAnswerAdvancing = false;
   const number = current + 1;
   elements.questionText.textContent = questions[current];
   elements.questionCounter.textContent = `שאלה ${number} מתוך ${questions.length}`;
+  elements.answers.classList.remove("is-locked");
   elements.answers.replaceChildren();
 
   choices.forEach((choice, index) => {
@@ -135,21 +139,27 @@ function renderQuestion() {
     elements.answers.appendChild(button);
   });
 
-  elements.backQuestion.style.visibility = current === 0 ? "hidden" : "visible";
-  elements.nextQuestion.disabled = answers[current] === null;
-  elements.nextQuestion.textContent = current === questions.length - 1 ? "לצפייה בתוצאה" : "לשאלה הבאה";
+  elements.backQuestion.hidden = current === 0;
   saveProgress();
 }
 
 function selectAnswer(value) {
+  if (isTransitioning || isAnswerAdvancing) return;
   answers[current] = value;
   [...elements.answers.children].forEach((button) => {
     const selected = Number(button.dataset.value) === value;
     button.classList.toggle("is-selected", selected);
     button.setAttribute("aria-checked", String(selected));
+    button.disabled = true;
   });
-  elements.nextQuestion.disabled = false;
+  elements.answers.classList.add("is-locked");
+  isAnswerAdvancing = true;
   saveProgress();
+
+  answerAdvanceTimer = window.setTimeout(() => {
+    isAnswerAdvancing = false;
+    nextQuestion();
+  }, reducedMotion ? 0 : 360);
 }
 
 function handleAnswerKeys(event) {
@@ -172,13 +182,12 @@ function nextQuestion() {
 }
 
 function previousQuestion() {
-  if (current === 0 || isTransitioning) return;
+  if (current === 0 || isTransitioning || isAnswerAdvancing) return;
   transitionToQuestion(-1);
 }
 
 function transitionToQuestion(step) {
   isTransitioning = true;
-  elements.nextQuestion.disabled = true;
   const content = document.querySelector("#quiz .screen-content");
   content.classList.remove("is-switching");
   void content.offsetWidth;
@@ -362,7 +371,6 @@ const soundscape = new AmbientSoundscape();
 
 document.getElementById("startQuiz").addEventListener("click", startQuiz);
 elements.backQuestion.addEventListener("click", previousQuestion);
-elements.nextQuestion.addEventListener("click", nextQuestion);
 document.getElementById("openWhatsApp").addEventListener("click", openWhatsApp);
 document.getElementById("openInstagram").addEventListener("click", openInstagram);
 document.getElementById("restartQuiz").addEventListener("click", restartQuiz);
