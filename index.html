@@ -93,11 +93,19 @@
             <p class="card-label">מה התוצאה שלך מספרת?</p>
             <p id="personalMessage"></p>
           </div>
+          <button class="primary-button result-continue" id="continueResult" type="button">ממשיכים</button>
+        </div>
+      </section>
+
+      <section class="screen guidance-screen" id="guidance" data-screen="guidance" aria-labelledby="guidanceTitle" hidden>
+        <div class="screen-content guidance-content">
           <div class="result-card tip-card">
-            <p class="card-label">הטיפ שלי:</p>
+            <p class="card-label" id="guidanceTitle">הטיפ שלי:</p>
             <p id="personalTip"></p>
           </div>
-          <p class="disclaimer">חשוב לזכור: השאלון נועד להתבוננות אישית ואינו אבחון מקצועי. התוצאה לא מגדירה אותך כהורה ולא מסכמת את מערכת היחסים שלך עם הילד.</p>
+          <div class="disclaimer-panel">
+            <p class="disclaimer"><strong>חשוב לזכור:</strong> השאלון נועד להתבוננות אישית ואינו אבחון מקצועי. התוצאה לא מגדירה אותך כהורה ולא מסכמת את מערכת היחסים שלך עם הילד.</p>
+          </div>
           <div class="closing-copy">
             <h2>באהבה, יקירתי ❤️</h2>
             <p>חשוב לי להזכיר: מערכת היחסים שלך עם הילד לא מסתכמת במספר שקיבלת בשאלון.</p>
@@ -109,18 +117,16 @@
             <p>לפעמים שיחה אחת יכולה לעזור לראות דברים קצת אחרת.</p>
           </div>
           <div class="completion-actions">
-            <button class="primary-button whatsapp-button" id="openWhatsApp" type="button">רוצה לדבר עם חן בוואטסאפ</button>
-            <button class="instagram-button" id="openInstagram" type="button">
+            <a class="primary-button whatsapp-button" id="openWhatsApp" href="https://wa.me/972542221511">רוצה לדבר עם חן בוואטסאפ</a>
+            <a class="instagram-button" id="openInstagram" href="https://www.instagram.com/hen.cohen.coach/">
               <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
               <span>חזרה לאינסטגרם</span>
-            </button>
-            <button class="text-button centered" id="restartQuiz" type="button">למלא את השאלון מחדש</button>
+            </a>
           </div>
         </div>
       </section>
 
       <footer class="app-footer">חן כהן · ייעוץ חינוכי, הדרכת הורים ואימון מנטלי<br />לא מחכים שהילד יבקש שינוי.</footer>
-      <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </main>
 
     <script src="config.js"></script>

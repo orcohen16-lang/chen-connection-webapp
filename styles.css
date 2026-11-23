@@ -91,7 +91,7 @@ p { margin: 0 0 14px; }
 .soft-note.compact { color: #667069; font-size: 0.91rem; }
 .start-button { width: 100%; margin-top: 4px; }
 
-.primary-button, .instagram-button, .text-button { border: 0; cursor: pointer; transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, opacity 180ms ease; }
+.primary-button, .instagram-button, .text-button { border: 0; cursor: pointer; text-decoration: none; transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, opacity 180ms ease; }
 .primary-button { min-height: 56px; padding: 15px 26px; border-radius: 999px; color: white; background: linear-gradient(135deg, #94649e, var(--purple-deep)); box-shadow: 0 12px 28px rgba(104, 66, 113, 0.24); font-weight: 700; }
 .primary-button:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(104, 66, 113, 0.3); }
 .primary-button:active { transform: translateY(0); }
@@ -148,18 +148,21 @@ p { margin: 0 0 14px; }
 .tip-card { background: linear-gradient(135deg, var(--soft-clay), #fff9f5); }
 .card-label { color: var(--sage); font-weight: 700; }
 .tip-card .card-label { color: #9d5c40; }
-.disclaimer { margin: 25px 0 34px; color: var(--muted); font-size: 0.88rem; }
+.result-continue { width: 100%; margin-top: 24px; }
+.guidance-content { background: linear-gradient(155deg, rgba(255,255,255,.9), rgba(248,245,240,.86)); }
+.guidance-content .tip-card { margin-top: 0; box-shadow: 0 14px 34px rgba(159,91,50,.09); }
+.disclaimer-panel { margin: 20px 0 32px; padding: 18px 19px; border: 1px solid rgba(128,81,139,.12); border-radius: 18px; background: rgba(242,235,243,.5); }
+.disclaimer { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.disclaimer strong { color: var(--purple-deep); }
 .closing-copy { padding-top: 32px; border-top: 1px solid var(--line); }
 .completion-actions { display: grid; gap: 12px; margin-top: 32px; }
-.whatsapp-button { width: 100%; background: linear-gradient(135deg, #6b9f79, #4d7d5a); box-shadow: 0 12px 28px rgba(69, 120, 83, 0.22); }
+.whatsapp-button { display: flex; align-items: center; justify-content: center; width: 100%; background: linear-gradient(135deg, #6b9f79, #4d7d5a); box-shadow: 0 12px 28px rgba(69, 120, 83, 0.22); }
 .instagram-button { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 14px 24px; border: 1px solid rgba(128, 81, 139, 0.24); border-radius: 999px; color: var(--purple); background: rgba(255, 255, 255, 0.62); font-weight: 700; }
 .instagram-button:hover { transform: translateY(-2px); background: var(--soft-sage); }
 .instagram-button svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; }
 .centered { justify-self: center; }
 
 .app-footer { padding: 24px 12px 0; color: var(--muted); font-size: 0.8rem; line-height: 1.6; text-align: center; }
-.toast { position: fixed; z-index: 10; inset: auto 50% max(22px, env(safe-area-inset-bottom)) auto; width: min(calc(100% - 32px), 420px); padding: 13px 18px; border-radius: 14px; color: white; background: rgba(55, 48, 46, 0.94); box-shadow: 0 12px 34px rgba(40, 30, 28, 0.2); text-align: center; transform: translate(50%, 20px); opacity: 0; pointer-events: none; transition: opacity 220ms ease, transform 300ms var(--ease); }
-.toast.is-visible { opacity: 1; transform: translate(50%, 0); }
 
 @keyframes float { to { transform: translate3d(2rem, 2.5rem, 0) scale(1.08); } }
 @keyframes soundbar { to { height: 13px; } }

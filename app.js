@@ -52,7 +52,6 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 let current = 0;
 let answers = Array(questions.length).fill(null);
 let activeScreen = "instructions";
-let toastTimer;
 let processingTimer;
 let answerAdvanceTimer;
 let isTransitioning = false;
@@ -69,7 +68,6 @@ const elements = {
   personalTip: document.getElementById("personalTip"),
   soundToggle: document.getElementById("soundToggle"),
   soundLabel: document.getElementById("soundLabel"),
-  toast: document.getElementById("toast"),
 };
 
 function showScreen(id, direction = "forward") {
@@ -228,41 +226,16 @@ function showResult() {
   saveProgress();
 }
 
-function openWhatsApp() {
+function showGuidance() {
+  showScreen("guidance");
+}
+
+function configureExternalLinks() {
   const phone = String(config.whatsappPhone || "").replace(/\D/g, "");
-  if (!phone || phone.includes("X") || phone.length < 10) {
-    showToast("מספר הוואטסאפ יתווסף לפני הפרסום.");
-    return;
-  }
   const message = encodeURIComponent(config.whatsappMessage || "");
-  window.location.href = `https://wa.me/${phone}${message ? `?text=${message}` : ""}`;
-}
-
-function openInstagram() {
   const instagramUrl = String(config.instagramUrl || "").trim();
-  if (instagramUrl) {
-    window.location.href = instagramUrl;
-    return;
-  }
-
-  const cameFromInstagram = /instagram\.com/i.test(document.referrer) || new URLSearchParams(window.location.search).get("from") === "instagram";
-  if (cameFromInstagram && window.history.length > 1) {
-    window.history.back();
-    return;
-  }
-  showToast("קישור האינסטגרם יתווסף לפני הפרסום.");
-}
-
-function restartQuiz() {
-  clearStoredProgress();
-  startQuiz();
-}
-
-function showToast(message) {
-  clearTimeout(toastTimer);
-  elements.toast.textContent = message;
-  elements.toast.classList.add("is-visible");
-  toastTimer = window.setTimeout(() => elements.toast.classList.remove("is-visible"), 3200);
+  document.getElementById("openWhatsApp").href = `https://wa.me/${phone}${message ? `?text=${message}` : ""}`;
+  document.getElementById("openInstagram").href = instagramUrl;
 }
 
 function saveProgress() {
@@ -371,17 +344,12 @@ const soundscape = new AmbientSoundscape();
 
 document.getElementById("startQuiz").addEventListener("click", startQuiz);
 elements.backQuestion.addEventListener("click", previousQuestion);
-document.getElementById("openWhatsApp").addEventListener("click", openWhatsApp);
-document.getElementById("openInstagram").addEventListener("click", openInstagram);
-document.getElementById("restartQuiz").addEventListener("click", restartQuiz);
+document.getElementById("continueResult").addEventListener("click", showGuidance);
 elements.soundToggle.addEventListener("click", () => soundscape.toggle());
 
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && soundscape.isPlaying) soundscape.stop();
 });
 
-window.addEventListener("pageshow", (event) => {
-  if (event.persisted && activeScreen === "result") elements.toast.classList.remove("is-visible");
-});
-
+configureExternalLinks();
 restoreProgress();

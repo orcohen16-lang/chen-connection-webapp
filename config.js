@@ -1,6 +1,6 @@
 window.CHEN_APP_CONFIG = {
-  whatsappPhone: "972XXXXXXXXX",
-  whatsappMessage: "היי חן, מילאתי את השאלון ורציתי לדבר איתך על מערכת היחסים שלי עם הילד.",
-  instagramUrl: "",
+  whatsappPhone: "972542221511",
+  whatsappMessage: "",
+  instagramUrl: "https://www.instagram.com/hen.cohen.coach/",
   preserveProgress: true,
 };
