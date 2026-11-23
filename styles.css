@@ -151,10 +151,11 @@ p { margin: 0 0 14px; }
 .result-continue { width: 100%; margin-top: 24px; }
 .guidance-content { background: linear-gradient(155deg, rgba(255,255,255,.9), rgba(248,245,240,.86)); }
 .guidance-content .tip-card { margin-top: 0; box-shadow: 0 14px 34px rgba(159,91,50,.09); }
-.disclaimer-panel { margin: 20px 0 32px; padding: 18px 19px; border: 1px solid rgba(128,81,139,.12); border-radius: 18px; background: rgba(242,235,243,.5); }
+.disclaimer-panel { margin: 20px 0 32px; padding: 23px 21px; border: 1px solid rgba(128,81,139,.14); border-radius: 20px; background: linear-gradient(145deg, rgba(242,235,243,.66), rgba(255,255,255,.72)); box-shadow: 0 14px 34px rgba(87,58,82,.07); }
+.remember-title { margin-bottom: 10px; color: var(--purple-deep); font-size: 1.08rem; }
 .disclaimer { margin: 0; color: var(--muted); font-size: 0.9rem; }
-.disclaimer strong { color: var(--purple-deep); }
-.closing-copy { padding-top: 32px; border-top: 1px solid var(--line); }
+.remember-copy { margin-top: 22px; padding-top: 21px; border-top: 1px solid rgba(128,81,139,.12); }
+.remember-copy p:last-child { margin-bottom: 0; }
 .completion-actions { display: grid; gap: 12px; margin-top: 32px; }
 .whatsapp-button { display: flex; align-items: center; justify-content: center; width: 100%; background: linear-gradient(135deg, #6b9f79, #4d7d5a); box-shadow: 0 12px 28px rgba(69, 120, 83, 0.22); }
 .instagram-button { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 14px 24px; border: 1px solid rgba(128, 81, 139, 0.24); border-radius: 999px; color: var(--purple); background: rgba(255, 255, 255, 0.62); font-weight: 700; }
