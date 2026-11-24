@@ -55,8 +55,8 @@ button:focus-visible { outline: 3px solid rgba(128, 81, 139, 0.3); outline-offse
 .grain { position: absolute; inset: 0; opacity: 0.18; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E"); }
 
 .app-shell { position: relative; z-index: 1; width: calc(100% - 28px); max-width: 780px; min-height: 100svh; margin: 0 auto; padding: max(14px, env(safe-area-inset-top)) 0 max(34px, env(safe-area-inset-bottom)); }
-.app-header { display: flex; align-items: center; justify-content: space-between; min-height: 92px; padding: 0 8px; }
-.brand-logo { width: 126px; height: 76px; object-fit: contain; object-position: right center; }
+.app-header { display: flex; align-items: center; justify-content: space-between; min-height: 104px; padding: 0 8px; }
+.brand-logo { width: 96px; height: 96px; object-fit: contain; object-position: right center; }
 .sound-control { display: inline-flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 13px; border: 1px solid rgba(128, 81, 139, 0.2); border-radius: 999px; color: var(--purple); background: rgba(255, 255, 255, 0.68); backdrop-filter: blur(12px); cursor: pointer; font-size: 0.82rem; font-weight: 600; }
 .sound-bars { display: flex; align-items: end; gap: 2px; width: 14px; height: 14px; }
 .sound-bars i { width: 3px; height: 5px; border-radius: 4px; background: currentColor; transition: height 180ms ease; }
@@ -127,19 +127,18 @@ p { margin: 0 0 14px; }
 .quiz-screen .screen-content.is-switching { animation: questionCardShift 620ms var(--ease) both; }
 
 .processing-content { display: grid; min-height: 520px; place-items: center; align-content: center; text-align: center; }
-.processing-stack { position: relative; width: 136px; height: 164px; margin-bottom: 30px; }
-.processing-stack i { position: absolute; left: 50%; display: block; border-radius: 48% 52% 45% 55% / 58% 49% 51% 42%; transform: translateX(-50%); box-shadow: 0 8px 20px rgba(56, 52, 49, 0.13); }
-.processing-stack i:nth-child(1) { bottom: 5px; width: 124px; height: 38px; background: var(--purple); }
-.processing-stack i:nth-child(2) { bottom: 39px; width: 98px; height: 34px; background: var(--orange); }
-.processing-stack i:nth-child(3) { bottom: 69px; width: 76px; height: 30px; background: var(--purple-light); }
-.processing-stack i:nth-child(4) { bottom: 96px; width: 57px; height: 27px; background: var(--sand); }
-.processing-stack i:nth-child(5) { bottom: 120px; width: 39px; height: 28px; background: var(--ink); }
-.processing-screen.is-active .processing-stack { animation: stackBreathe 2.1s 900ms ease-in-out infinite; }
-.processing-screen.is-active .processing-stack i:nth-child(1) { animation: settleOne 820ms var(--ease) both; }
-.processing-screen.is-active .processing-stack i:nth-child(2) { animation: settleTwo 820ms 35ms var(--ease) both; }
-.processing-screen.is-active .processing-stack i:nth-child(3) { animation: settleThree 820ms 70ms var(--ease) both; }
-.processing-screen.is-active .processing-stack i:nth-child(4) { animation: settleFour 820ms 105ms var(--ease) both; }
-.processing-screen.is-active .processing-stack i:nth-child(5) { animation: settleFive 820ms 140ms var(--ease) both; }
+.processing-stack { position: relative; width: 120px; height: 190px; margin-bottom: 26px; }
+.processing-stack svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* Stones drawn after the logo cairn: outline var(--ink) #383431, light fill, hatching on the right */
+.stone { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0; }
+.stone-body { fill: rgba(255, 255, 255, 0.92); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgba(56, 52, 49, 0.08)); }
+.stone-hatch { fill: none; stroke: var(--ink); stroke-width: 1.1; stroke-linecap: round; opacity: 0.6; }
+.processing-screen.is-active .processing-stack { animation: stackBreathe 3.2s 3s ease-in-out infinite; }
+.processing-screen.is-active .stone { animation: stoneSettle 1000ms var(--ease) both; }
+.processing-screen.is-active .stone-2 { animation-delay: 480ms; }
+.processing-screen.is-active .stone-3 { animation-delay: 960ms; }
+.processing-screen.is-active .stone-4 { animation-delay: 1440ms; }
+.processing-screen.is-active .stone-5 { animation-delay: 1920ms; }
 .processing-content h2 { font-size: clamp(1.45rem, 5vw, 2rem); }
 
 .score-wrap { display: flex; flex-direction: column; align-items: start; margin: 25px 0 31px; }
@@ -184,17 +183,13 @@ p { margin: 0 0 14px; }
 .answer .ripple { position: absolute; border-radius: 50%; background: rgba(128, 81, 139, 0.18); transform: scale(0); animation: rippleOut 520ms ease-out forwards; pointer-events: none; }
 @keyframes stackBreathe { 50% { transform: translateY(-5px) scale(1.025); } }
 @keyframes questionCardShift { 0% { transform: translateZ(0) rotateY(0); opacity: 1; } 43% { transform: translate3d(-20px, 2px, -36px) rotateY(4deg); opacity: .22; } 54% { transform: translate3d(20px, 2px, -36px) rotateY(-4deg); opacity: .2; } 100% { transform: translateZ(0) rotateY(0); opacity: 1; } }
-@keyframes settleOne { 0% { transform: translate(-50%, 80px) rotate(-8deg); opacity: 0; } 58% { transform: translate(-50%, -4px) rotate(2deg); opacity: 1; } 100% { transform: translateX(-50%) rotate(0); opacity: 1; } }
-@keyframes settleTwo { 0% { transform: translate(-145%, -32px) rotate(-24deg); opacity: 0; } 62% { transform: translate(-46%, 3px) rotate(4deg); opacity: 1; } 100% { transform: translateX(-50%) rotate(0); opacity: 1; } }
-@keyframes settleThree { 0% { transform: translate(65%, -68px) rotate(28deg); opacity: 0; } 64% { transform: translate(-54%, 2px) rotate(-4deg); opacity: 1; } 100% { transform: translateX(-50%) rotate(0); opacity: 1; } }
-@keyframes settleFour { 0% { transform: translate(-175%, -76px) rotate(-31deg); opacity: 0; } 66% { transform: translate(-46%, -2px) rotate(4deg); opacity: 1; } 100% { transform: translateX(-50%) rotate(0); opacity: 1; } }
-@keyframes settleFive { 0% { transform: translate(95%, -112px) rotate(42deg); opacity: 0; } 68% { transform: translate(-54%, 1px) rotate(-5deg); opacity: 1; } 100% { transform: translateX(-50%) rotate(0); opacity: 1; } }
+@keyframes stoneSettle { 0% { transform: translateY(-46px) rotate(-5deg); opacity: 0; } 55% { transform: translateY(2px) rotate(1.5deg); opacity: 1; } 78% { transform: translateY(-1px) rotate(-0.5deg); } 100% { transform: none; opacity: 1; } }
 
 @media (max-width: 560px) {
   body { font-size: 16px; }
   .app-shell { width: calc(100% - 18px); }
-  .app-header { min-height: 78px; padding-inline: 5px; }
-  .brand-logo { width: 112px; height: 64px; }
+  .app-header { min-height: 90px; padding-inline: 5px; }
+  .brand-logo { width: 82px; height: 82px; }
   .sound-control { min-height: 38px; padding: 7px 11px; }
   .screen-content { padding: 27px 20px 30px; border-radius: 24px; }
   h1 { font-size: clamp(2.35rem, 13vw, 3.45rem); }

@@ -251,7 +251,7 @@ function animateCountUp(element, target, duration) {
 
 function showProcessing() {
   showScreen("processing");
-  processingTimer = window.setTimeout(showResult, reducedMotion ? 350 : 1750);
+  processingTimer = window.setTimeout(showResult, reducedMotion ? 350 : 3800);
 }
 
 function showResult() {

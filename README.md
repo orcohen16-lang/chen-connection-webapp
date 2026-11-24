@@ -31,7 +31,7 @@ window.CHEN_APP_CONFIG = {
 ```
 
 - מספר WhatsApp צריך להיות בפורמט בינלאומי, ללא `+` וללא רווחים.
-- החליפו את `assets/logo-placeholder.svg` בלוגו הסופי. אפשר להשתמש גם ב-PNG, אך יש לעדכן את הנתיב ב-`index.html`.
+- הלוגו: `assets/logo-chen-cohen.png` (רקע שקוף). המקור נשמר בתיק הלקוחה תחת `branding/assets/`.
 - כל המלל המקורי של השאלון נמצא ב-`index.html` וב-`app.js` ונשמר ללא שינוי.
 
 ## תצוגה מקומית
